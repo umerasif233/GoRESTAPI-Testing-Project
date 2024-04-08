@@ -1,0 +1,2088 @@
+{
+	"info": {
+		"_postman_id": "18fe1f90-7746-4817-9923-11a3bc730fbd",
+		"name": "GoREST API Testing Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33467038"
+	},
+	"item": [
+		{
+			"name": "Positive Test Cases POST Request",
+			"item": [
+				{
+					"name": "POST_CreateUserWithValidData - Validates that a user is successfully created when all required data fields are correctly provided.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"jim\" + randomString;\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"name_env\",name);\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsondata= JSON.parse(responseBody);\r",
+									"jsondata.id;\r",
+									"pm.environment.set(\"id_env\", jsondata.id);\r",
+									"\r",
+									"\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_ValidateResponseContainsUUID - Ensures that the API response includes a valid UUID for the newly created user.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"jim\" + randomString;\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"name_env\",name);\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsondata= JSON.parse(responseBody);\r",
+									"jsondata.id;\r",
+									"pm.environment.set(\"id_env\", jsondata.id);\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has a valid ID\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"pm.expect(jsonData).to.have.property(\"id\");\r",
+									"pm.expect(jsonData.id).to.not.be.null;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_MatchUserDataInResponse - Checks if the response data accurately reflects the user data submitted in the request.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"jim\" + randomString;\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"name_env\",name);\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsondata= JSON.parse(responseBody);\r",
+									"jsondata.id;\r",
+									"pm.environment.set(\"id_env\", jsondata.id);\r",
+									"\r",
+									"\r",
+									"pm.test(\"User data matches input data\", function () {\r",
+									"   var jsonData = pm.response.json();\r",
+									"    \r",
+									"    // Retrieve the variables from the environment\r",
+									"    let expectedName = pm.environment.get(\"name_env\");\r",
+									"    let expectedEmail = pm.environment.get(\"email_env\");\r",
+									"\r",
+									"    // Compare the response data with the expected values\r",
+									"    pm.expect(jsonData.name).to.eql(expectedName);\r",
+									"    pm.expect(jsonData.email).to.eql(expectedEmail);\r",
+									"    pm.expect(jsonData.gender).to.eql(\"male\");\r",
+									"    pm.expect(jsonData.status).to.eql(\"inactive\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_AcceptSingleCharacterName - Tests the API's acceptance of a single character as a valid name input.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let minName = \"A\"; \r",
+									"pm.environment.set(\"minName\", minName);\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200 OK for 1 character name\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains the user object with the 1 character name\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('name');\r",
+									"    pm.expect(jsonData.name).to.eql('A');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{minName}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_AcceptMaxCharacterName - Confirms the API's handling of names that are at the maximum allowed character limit.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"const name = \"A\".repeat(200);\r",
+									"pm.environment.set(\"minName\", name);\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200 OK for 100 character name\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains the user object with the 100 character name\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('name');\r",
+									"    pm.expect(jsonData.name.length).to.eql(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{minName}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_ValidateCorrectEmailFormat - Assesses the API's ability to accept email addresses that meet the standard format requirements.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"jim\" + randomString;\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"name_env\",name);\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									"let requestBody = {\r",
+									"    // Assuming other fields like 'name', 'gender', and 'status' are valid\r",
+									"    name: \"John Doe\",\r",
+									"    gender: \"male\",\r",
+									"    status: \"active\"\r",
+									"    // Email field is omitted to test API validation\r",
+									"};\r",
+									"\r",
+									"pm.environment.set('requestBody', JSON.stringify(requestBody));\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsondata= JSON.parse(responseBody);\r",
+									"jsondata.id;\r",
+									"pm.environment.set(\"id_env\", jsondata.id);\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Email is in valid format\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    let email = jsonData.email;\r",
+									"    let emailRegex = /^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/;\r",
+									"    \r",
+									"    pm.expect(email).to.match(emailRegex);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_RejectEmailMissing@Symbol - Verifies that the API rejects email addresses without the \"@\" symbol.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"jim\" + randomString;\r",
+									"let email = \"jim\"+ randomString+\"gmail.com\";\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"name_env\",name);\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validate that an email address without '@' is rejected\", function () {\r",
+									"    let responseJson = pm.response.json();\r",
+									"    pm.expect(responseJson[0]).to.have.property('field');\r",
+									"    pm.expect(responseJson[0]).to.have.property('message');\r",
+									"\r",
+									"    // Validate the content of the 'field' and 'message'\r",
+									"    pm.expect(responseJson[0].field).to.eql('email');\r",
+									"    pm.expect(responseJson[0].message).to.eql(\"is invalid\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_AcceptMaxLengthEmail - Tests whether the API accepts email addresses that are exactly at the maximum character length permitted.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let username = \"userrikkkllzz_\";\r",
+									"let domain = \"@example.com\";\r",
+									"\r",
+									"// Calculate the number of characters needed to fill to reach 200 characters total\r",
+									"let neededChars = 200 - username.length - domain.length;\r",
+									"let filler = 'a'.repeat(neededChars);\r",
+									"\r",
+									"// Concatenate to form the email\r",
+									"let email = username + filler + domain;\r",
+									"\r",
+									"// Set the email environment variable\r",
+									"pm.environment.set(\"email_env\", email);\r",
+									"\r",
+									"// Log the length for debugging purposes\r",
+									"console.log(\"Generated email length: \" + email.length); "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validate that an email address with 200 length is accepted\", function () {\r",
+									"    let jsondata = pm.response.json();\r",
+									"    pm.expect(jsondata).to.have.property('email');\r",
+									"    pm.expect(jsondata.email.length).to.eql(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_GenderMaleAccepted - Confirms that the API allows the selection of 'male' as a gender option.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"jim\" + randomString;\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"name_env\",name);\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that API accepts valid male gender\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.gender).to.equal(\"male\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_GenderFemaleAccepted - Confirms that the API allows the selection of 'female' as a gender option.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"jim\" + randomString;\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"name_env\",name);\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that API accepts valid male gender\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.gender).to.equal(\"female\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"female\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_StatusActiveAccepted - Ensures that the API accepts 'active' as a valid status for the user.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"jim\" + randomString;\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"name_env\",name);\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that API accepts valid active status\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.equal(\"active\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_StatusInactiveAccepted - Ensures that the API accepts 'inactive' as a valid status for the user.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"jim\" + randomString;\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"name_env\",name);\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that API accepts valid 'inactive' status\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.equal(\"inactive\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Negative Test Cases POST Request",
+			"item": [
+				{
+					"name": "DELETE_MethodNotAllowedForCreateUser - Ensures that the API does not support the DELETE method for user creation endpoints.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"jim\" + randomString;\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"name_env\",name);\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 404 Not Found\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_RejectUnauthenticatedAccess - Ensures that the API denies access to user creation functionality without proper authentication",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"jim\" + randomString;\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"name_env\",name);\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401 Unauthorized\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_RejectEmptyRequestBody - Validates that the API returns an appropriate response when the request body is empty.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"jim\" + randomString;\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"name_env\",name);\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401 Unauthorized\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_RejectInvalidEmailFormat - Confirms that the API rejects user creation when the email provided is blank.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"TestUser_\" + randomString;\r",
+									"let invalidEmail = \"invalid-email\"; // Deliberately incorrect format\r",
+									"\r",
+									"pm.environment.set(\"name_env\", name);\r",
+									"pm.environment.set(\"email_env\", invalidEmail);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Creating user with invalid 'email' should fail\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 422]);\r",
+									"    let responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody).to.be.an('array').that.is.not.empty;\r",
+									"    pm.expect(responseBody[0]).to.have.property('field');\r",
+									"    pm.expect(responseBody[0]).to.have.property('message');\r",
+									"    pm.expect(responseBody[0].field).to.eql('email');\r",
+									" pm.expect(responseBody[0].message).to.eql(\"is invalid\");\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_RejectInvalidName - Verifies that the API rejects blank name",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let validEmail = \"testuser_\" + Math.random().toString(36).substring(2) + \"@example.com\";\r",
+									"let invalidName = \"\"; // Set an intentionally invalid name (e.g., empty or too short)\r",
+									"\r",
+									"pm.environment.set(\"name_env\", invalidName);\r",
+									"pm.environment.set(\"email_env\", validEmail);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Creating user with invalid 'name' should fail\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 422]);\r",
+									"    let responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody).to.be.an('array').that.is.not.empty;\r",
+									"    pm.expect(responseBody[0]).to.have.property('field');\r",
+									"    pm.expect(responseBody[0]).to.have.property('message');\r",
+									"    pm.expect(responseBody[0].field).to.eql('name');\r",
+									" pm.expect(responseBody[0].message).to.eql(\"can't be blank\");\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_RejectInvalidGender - Checks if the API rejects gender values that are not part of the accepted set (anything other than 'male' or 'female').",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"jim\" + randomString;\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"name_env\",name);\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Invalid gender should return a specific error message\", function () {\r",
+									"    var responseJson = pm.response.json();\r",
+									"\r",
+									"    // Check if the response has an array with at least one element\r",
+									"    pm.expect(responseJson).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    // Check the first object in the array for the 'field' and 'message' properties\r",
+									"    pm.expect(responseJson[0]).to.have.property('field');\r",
+									"    pm.expect(responseJson[0]).to.have.property('message');\r",
+									"\r",
+									"    // Validate the content of the 'field' and 'message'\r",
+									"    pm.expect(responseJson[0].field).to.eql('gender');\r",
+									"    pm.expect(responseJson[0].message).to.eql(\"can't be blank, can be male of female\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"other\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_RejectInvalidStatus - Tests if the API rejects statuses that are not recognized (e.g., statuses other than 'active' or 'inactive').",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomString = Math.random().toString(36).substring(2);\r",
+									"let name = \"jim\" + randomString;\r",
+									"let email = \"jim\"+ randomString+\"@gmail.com\";\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"name_env\",name);\r",
+									"pm.environment.set(\"email_env\",email);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Invalid status should return a specific error message\", function () {\r",
+									"    var responseJson = pm.response.json();\r",
+									"\r",
+									"    // Check if the response has an array with at least one element\r",
+									"    pm.expect(responseJson).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    // Check the first object in the array for the 'field' and 'message' properties\r",
+									"    pm.expect(responseJson[0]).to.have.property('field');\r",
+									"    pm.expect(responseJson[0]).to.have.property('message');\r",
+									"\r",
+									"    // Validate the content of the 'field' and 'message'\r",
+									"    pm.expect(responseJson[0].field).to.eql('status');\r",
+									"    pm.expect(responseJson[0].message).to.eql(\"can't be blank\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"unknown\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Positive Test Cases GET Request",
+			"item": [
+				{
+					"name": "GET_Users_List_Success - Validate that API returns a list of users successfully",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 and returns an array\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(Array.isArray(jsonData)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_User_ById_Exists - Confirms that the API can retrieve a user when a valid user ID is provided.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"GET_RetrieveUserWithValidId: Status code is 200 and returns a user object\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id.toString()).to.equal(pm.environment.get(\"validUserId\"));\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let validUserId = '6821709';  // Assume 'your_user_id' is a known valid user ID\r",
+									"pm.environment.set(\"validUserId\", validUserId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{validUserId}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{validUserId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_Users_SupportedContentType - Validate that API handles a GET request with a 'Content-Type' header set to applicaton/json value",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"GET_HeadersCheck: Verify content type in headers\", function () {\r",
+									"    pm.response.to.have.status(200); // Assuming 200 is the success status code\r",
+									"    \r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    \r",
+									"    const contentTypeHeader = pm.response.headers.get(\"Content-Type\");\r",
+									"    \r",
+									"    pm.expect(contentTypeHeader).to.include(\"application/json\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let validUserId = '6821709';  // Assume 'your_user_id' is a known valid user ID\r",
+									"pm.environment.set(\"validUserId\", validUserId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}",
+							"host": [
+								"{{Url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Positive Test Cases PUT Request",
+			"item": [
+				{
+					"name": "PUT_UpdateUserWithValidData - Validates that the API successfully updates a user's details when provided with valid data fields.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let name = 'umer';\r",
+									"let email = 'umer@test1233.com';\r",
+									"let gender = 'male';\r",
+									"let status = 'inactive';\r",
+									"\r",
+									"pm.environment.set(\"name_env\", name);\r",
+									"pm.environment.set(\"email_env\", email);\r",
+									"pm.environment.set(\"gender_env\", gender);\r",
+									"pm.environment.set(\"status_env\", status);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let expectedName = pm.environment.get(\"name_env\");\r",
+									"let expectedEmail = pm.environment.get(\"email_env\");\r",
+									"let expectedGender = pm.environment.get(\"gender_env\");\r",
+									"let expectedStatus = pm.environment.get(\"status_env\");\r",
+									"let ids= pm.environment.get(\"id_envv\");\r",
+									"pm.test(\"Response status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Updated user data matches input\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.name).to.eql(expectedName);\r",
+									"    pm.expect(responseData.email).to.eql(expectedEmail);\r",
+									"    pm.expect(responseData.gender).to.eql(expectedGender);\r",
+									"    pm.expect(responseData.status).to.eql(expectedStatus);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"{{gender_env}}\",\r\n    \"status\": \"{{status_env}}\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}/{{id_env}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{id_env}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_VerifyDataPersistenceAfterUpdate-API maintains data consistency by verifying that updated user details are correctly retrieved in a subsequent GET request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let expectedName = pm.environment.get(\"name_env\");\r",
+									"let expectedEmail = pm.environment.get(\"email_env\");\r",
+									"let expectedGender = pm.environment.get(\"gender_env\");\r",
+									"let expectedStatus = pm.environment.get(\"status_env\");\r",
+									"\r",
+									"pm.test(\"Response status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Data Persistence Check\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.name).to.eql(expectedName);\r",
+									"    pm.expect(responseData.email).to.eql(expectedEmail);\r",
+									"    pm.expect(responseData.gender).to.eql(expectedGender);\r",
+									"    pm.expect(responseData.status).to.eql(expectedStatus);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let name = 'umer';\r",
+									"let email = 'umer@test1233.com';\r",
+									"let gender = 'male';\r",
+									"let status = 'inactive';\r",
+									"\r",
+									"pm.environment.set(\"name_env\", name);\r",
+									"pm.environment.set(\"email_env\", email);\r",
+									"pm.environment.set(\"gender_env\", gender);\r",
+									"pm.environment.set(\"status_env\", status);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"{{gender_env}}\",\r\n    \"status\": \"{{status_env}}\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}/{{id_env}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{id_env}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT_UpdatedUserDataMatchesInput -Confirms that updated user details match the initial input data",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let name = 'umer';\r",
+									"let email = 'umer@gmail.com';\r",
+									"let gender = 'male';\r",
+									"let status = 'inactive';\r",
+									"\r",
+									"pm.environment.set(\"name_env\", name);\r",
+									"pm.environment.set(\"email_env\", email);\r",
+									"pm.environment.set(\"gender_env\", gender);\r",
+									"pm.environment.set(\"status_env\", status);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let expectedName = pm.environment.get(\"name_env\");\r",
+									"let expectedEmail = pm.environment.get(\"email_env\");\r",
+									"let expectedGender = pm.environment.get(\"gender_env\");\r",
+									"let expectedStatus = pm.environment.get(\"status_env\");\r",
+									"\r",
+									"pm.test(\"Response status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Updated user data matches input\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.name).to.eql(expectedName);\r",
+									"    pm.expect(responseData.email).to.eql(expectedEmail);\r",
+									"    pm.expect(responseData.gender).to.eql(expectedGender);\r",
+									"    pm.expect(responseData.status).to.eql(expectedStatus);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\",\r\n    \"gender\": \"{{gender_env}}\",\r\n    \"status\": \"{{status_env}}\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}/6828647",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"6828647"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT_UpdateUserWithPartialData - Validates that the API successfully updates a user's details when provided with partial data fields",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let name = 'umerrk';\r",
+									"let email = 'umer@test3211.com';\r",
+									"\r",
+									"pm.environment.set(\"name_env\", name);\r",
+									"pm.environment.set(\"email_env\", email);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 for partial data\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"name\": \"{{name_env}}\",\r\n    \"email\": \"{{email_env}}\"\r\n    \r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}/{{id_env}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{id_env}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Negative Test Cases PUT Request",
+			"item": [
+				{
+					"name": "PUT_UpdateUserWithInvalidData- Verifies that API rejects with Invalid Data",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{id_env}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{id_env}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT_UpdateUserWithInvalidAuthentication- Verify that API rejects for PUT Request with Invalid Authentication",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{id_env}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{id_env}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT_UpdateUserWithInvalidUserID- Verify that API rejects for PUT Request with Invalid ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{id_env}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{id_env}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT_UpdateUserWithSQLInjection- Verify that API rejects for PUT Request with SQL Injection",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{id_env}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{id_env}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Positive Test Cases DELETE Request",
+			"item": [
+				{
+					"name": "DELETE_ExistingUser- Verifies that API to delete an existing user by issuing a DELETE request with a valid user ID and authorization",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let validid= \"6828649\";\r",
+									"pm.environment.set(\"validid\",validid);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check if the status code is 204 No Content\r",
+									"pm.test(\"Status code is 204 No Content\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{validid}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{validid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_ValidateRemovalFromDatabase- Verifies that a user is successfully removed from the database by ensuring a subsequent GET request returns a 404 Not Found status.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let validid= \"6828649\";\r",
+									"pm.environment.set(\"validid\",validid);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User is no longer found in the database\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([404, 410]);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{validid}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{validid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Negative Test Cases DELETE Request",
+			"item": [
+				{
+					"name": "DELETE_NonExistentUser-Validates the API's response when attempting to delete a user with an ID that does not exist in the database",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let invalidid = '2324242-';\r",
+									"pm.environment.set(\"invalidid\",invalidid);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 404 Not Found\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message for invalid user ID\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('message');\r",
+									"    pm.expect(jsonData.message).to.include(\"Resource not found\"); \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{invalidid}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{invalidid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE_UserWithInvalidAuthentication-Verifies that the API rejects a DELETE request to remove a user when the request without valid authentication",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 404 Not found\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Proper error message is returned\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('message');\r",
+									"    // The specific message may vary by API; adjust the text as necessary\r",
+									"    pm.expect(jsonData.message).to.include(\"Invalid token\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "ffvfv",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/6828648",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"6828648"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "d87e40e4d208be83e8e96659798caa0d49b4f875f38f4b8ab3f0dcbb2a8c9b0a",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Url",
+			"value": "https://gorest.co.in/public/v2/users",
+			"type": "string"
+		},
+		{
+			"key": "API",
+			"value": "API_KEY",
+			"type": "string"
+		},
+		{
+			"key": "id_env",
+			"value": ""
+		}
+	]
+}
